@@ -5,16 +5,24 @@ import './App.css';
 import Home from './components/Home';
 import Vitamin from './components/Vitamin';
 import Navigation from './components/Navigation';
+import data from './data/data.json';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       toggleLogo: true,
+      cards: [],
     }
     this.toggleLogo = this.toggleLogo.bind(this);
     this.openNav = this.openNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({
+      cards: data,
+    });
   }
 
   toggleLogo(event) {
@@ -50,7 +58,9 @@ class App extends Component {
             <Navigation closeNav={this.closeNav} />
           </header>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" render={(props) => (
+              <Home cards={this.state.cards} />
+            )} />
             <Route exact path="/vitamin" component={Vitamin} />
           </Switch>
         </div>
